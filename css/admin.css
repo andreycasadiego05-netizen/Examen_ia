@@ -1,0 +1,585 @@
+/* ==========================================================================
+   1. VARIABLES DE DISEÑO (SISTEMA DE TOKENS - PREMIUM DARK MODE)
+   ========================================================================== */
+   :root {
+    /* Paleta de Colores - Estilo Carbono e Industrial Deportivo */
+    --admin-bg-main: #0b0f19;       /* Fondo Oscuro Profundo (Espacio de trabajo) */
+    --admin-bg-surface: #151c2c;    /* Fondo Secundario (Tarjetas, Paneles, Sidebar) */
+    --admin-bg-input: #1e293b;      /* Fondo de Entradas y Campos */
+    
+    /* Colores de Acento Eléctrico (Cian de Alta Visibilidad) */
+    --admin-acento: #00f2fe;        /* Cian Neón / Foco e Indicadores */
+    --admin-acento-hover: #4facfe;  /* Degradado / Hover Activo */
+    --admin-acento-muted: rgba(0, 242, 254, 0.1);
+    
+    /* Tipografía y Textos */
+    --admin-txt-main: #f1f5f9;      /* Blanco Grisáceo (Máxima Legibilidad) */
+    --admin-txt-muted: #94a3b8;     /* Gris Atenuado (Meta-información) */
+    
+    /* Colores de Estado Semántico */
+    --admin-exito: #4ade80;         /* Verde Éxito (En Stock / Tendencia Alza) */
+    --admin-peligro: #f87171;       /* Rojo Peligro (Quiebre Stock / Alerta) */
+    --admin-alerta: #fbbf24;        /* Amarillo Advertencia (Stock Bajo) */
+    
+    /* Estructura y Efectos */
+    --admin-fuente: 'Inter', system-ui, -apple-system, sans-serif;
+    --admin-radius: 10px;
+    --admin-transicion: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --admin-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+    --admin-border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ==========================================================================
+   2. RESET MODERNO Y ESTILOS BASE
+   ========================================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    font-family: var(--admin-fuente);
+    background-color: var(--admin-bg-main);
+    color: var(--admin-txt-main);
+    overflow: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+    background: none;
+    border: none;
+    color: inherit;
+    outline: none;
+}
+
+/* Scrollbar Personalizado para Entornos de Datos */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--admin-bg-main);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--admin-bg-input);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--admin-acento-hover);
+}
+
+/* ==========================================================================
+   3. ARQUITECTURA DEL LAYOUT GENERAL (CSS GRID)
+   ========================================================================== */
+.admin-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    width: 100vw;
+    height: 100vh;
+}
+
+.admin-main-content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: auto;
+    background-color: var(--admin-bg-main);
+}
+
+/* Contenedor Interno de Módulos */
+.dashboard-contenedor-modulos {
+    padding: 25px;
+    flex-grow: 1;
+}
+
+.modulo-dashboard {
+    display: none;
+}
+
+.modulo-dashboard.activo {
+    display: block;
+}
+
+/* ==========================================================================
+   4. COMPONENTE: BARRA LATERAL (SIDEBAR)
+   ========================================================================== */
+.admin-sidebar {
+    background-color: var(--admin-bg-surface);
+    border-right: var(--admin-border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    z-index: 99;
+}
+
+.sidebar-header {
+    padding: 25px 20px;
+    border-bottom: var(--admin-border);
+}
+
+.logo-contenedor {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+}
+
+.logo-texto-primario { color: var(--admin-txt-main); }
+.logo-texto-secundario { color: var(--admin-acento); }
+
+.sidebar-user-role {
+    font-size: 0.8rem;
+    color: var(--admin-txt-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sidebar-user-role i {
+    color: var(--admin-acento);
+}
+
+/* Menú de Navegación */
+.sidebar-navegacion {
+    flex-grow: 1;
+    padding: 25px 15px;
+}
+
+.sidebar-lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    color: var(--admin-txt-muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+    border-radius: var(--admin-radius);
+    transition: var(--admin-transicion);
+}
+
+.sidebar-link i {
+    font-size: 1.1rem;
+    width: 20px;
+    transition: var(--admin-transicion);
+}
+
+.sidebar-link:hover, 
+.sidebar-link.activo {
+    background-color: var(--admin-acento-muted);
+    color: var(--admin-acento);
+}
+
+.sidebar-link:hover i, 
+.sidebar-link.activo i {
+    transform: scale(1.1);
+}
+
+.sidebar-divisor {
+    height: 1px;
+    background: var(--admin-border);
+    margin: 15px 0;
+    list-style: none;
+}
+
+.link-externo {
+    color: var(--admin-peligro);
+}
+.link-externo:hover {
+    background-color: rgba(248, 113, 113, 0.1);
+    color: var(--admin-peligro);
+}
+
+/* ==========================================================================
+   5. COMPONENTE: BARRA SUPERIOR (HEADER / TOPBAR)
+   ========================================================================== */
+.admin-topbar {
+    background-color: var(--admin-bg-surface);
+    border-bottom: var(--admin-border);
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 90;
+}
+
+.admin-topbar h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--admin-txt-main);
+}
+
+.topbar-fecha-filtro {
+    font-size: 0.85rem;
+    color: var(--admin-txt-muted);
+    margin-top: 2px;
+}
+
+.highlight-periodo {
+    color: var(--admin-acento);
+    font-weight: 600;
+}
+
+/* Componentes de Interfaz del Botón Estándar */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: var(--admin-radius);
+    transition: var(--admin-transicion);
+    cursor: pointer;
+}
+
+.btn-secundario {
+    background-color: var(--admin-bg-input);
+    border: var(--admin-border);
+}
+.btn-secundario:hover {
+    background-color: var(--admin-acento-muted);
+    border-color: var(--admin-acento);
+    color: var(--admin-acento);
+}
+
+/* ==========================================================================
+   6. GRID DE DASHBOARD Y TARJETAS ANALÍTICAS (KPI'S)
+   ========================================================================== */
+.dashboard-grid-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.card-kpi {
+    background-color: var(--admin-bg-surface);
+    border: var(--admin-border);
+    border-radius: var(--admin-radius);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--admin-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.card-kpi::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+}
+
+.kpi-financiero::before { background-color: var(--admin-acento); }
+.kpi-volumen::before { background-color: var(--admin-exito); }
+.kpi-rentabilidad::before { background-color: var(--admin-alerta); }
+
+.kpi-etiqueta {
+    font-size: 0.85rem;
+    color: var(--admin-txt-muted);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.kpi-valor {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.kpi-valor-texto {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--admin-txt-main);
+}
+
+.kpi-subvalor {
+    font-size: 0.9rem;
+    color: var(--admin-alerta);
+    font-weight: 600;
+}
+
+.kpi-metas {
+    font-size: 0.75rem;
+    margin-top: 8px;
+    color: var(--admin-exito);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.kpi-icono {
+    font-size: 1.8rem;
+    color: var(--admin-txt-muted);
+    opacity: 0.3;
+}
+
+/* Rejilla de Gráficos de Negocio */
+.dashboard-grid-graficos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.grafico-card-wrapper {
+    background-color: var(--admin-bg-surface);
+    border: var(--admin-border);
+    border-radius: var(--admin-radius);
+    padding: 20px;
+    box-shadow: var(--admin-shadow);
+}
+
+.grafico-card-header {
+    margin-bottom: 15px;
+}
+
+.grafico-card-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--admin-txt-muted);
+}
+
+.grafico-canvas-container {
+    position: relative;
+    width: 100%;
+    height: 280px;
+}
+
+/* ==========================================================================
+   7. TABLAS DE DATOS CORPORATIVAS (VENTAS E INVENTARIO)
+   ========================================================================== */
+.tabla-card-wrapper {
+    background-color: var(--admin-bg-surface);
+    border: var(--admin-border);
+    border-radius: var(--admin-radius);
+    box-shadow: var(--admin-shadow);
+    margin-bottom: 25px;
+}
+
+.tabla-card-header {
+    padding: 20px;
+    border-bottom: var(--admin-border);
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.tabla-card-header h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+/* Barra de Búsqueda Minimalista e Integrada */
+.tabla-busqueda {
+    display: flex;
+    align-items: center;
+    background-color: var(--admin-bg-input);
+    border: var(--admin-border);
+    padding: 8px 14px;
+    border-radius: var(--admin-radius);
+    width: 300px;
+    transition: var(--admin-transicion);
+}
+
+.tabla-busqueda i {
+    color: var(--admin-txt-muted);
+    margin-right: 10px;
+}
+
+.tabla-busqueda input {
+    width: 100%;
+    font-size: 0.85rem;
+}
+
+.tabla-busqueda input::placeholder {
+    color: var(--admin-txt-muted);
+}
+
+.tabla-busqueda:focus-within {
+    border-color: var(--admin-acento);
+    box-shadow: 0 0 0 2px var(--admin-acento-muted);
+}
+
+/* Estructura y Reglas CSS de la Tabla de Datos */
+.tabla-responsive-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tabla-admin-custom {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.tabla-admin-custom th {
+    background-color: rgba(0, 0, 0, 0.15);
+    color: var(--admin-txt-muted);
+    padding: 14px 20px;
+    font-weight: 600;
+    border-bottom: var(--admin-border);
+    white-space: nowrap;
+}
+
+.tabla-admin-custom td {
+    padding: 14px 20px;
+    border-bottom: var(--admin-border);
+    color: var(--admin-txt-main);
+    white-space: nowrap;
+}
+
+.tabla-admin-custom tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabla-admin-custom tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Badges de Estado (Estatus Dinámicos) */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-critico {
+    background-color: rgba(248, 113, 113, 0.1);
+    color: var(--admin-peligro);
+    border: 1px solid rgba(248, 113, 113, 0.2);
+}
+
+.badge-saludable {
+    background-color: rgba(74, 222, 128, 0.1);
+    color: var(--admin-exito);
+    border: 1px solid rgba(74, 222, 128, 0.2);
+}
+
+.badge-advertencia {
+    background-color: rgba(251, 191, 36, 0.1);
+    color: var(--admin-alerta);
+    border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.badge-alerta-general {
+    background-color: var(--admin-peligro);
+    color: var(--admin-bg-main);
+    font-weight: 800;
+}
+
+/* ==========================================================================
+   8. FORMULARIOS DE GESTIÓN (REABASTECIMIENTO / EDICIÓN)
+   ========================================================================== */
+.form-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 15px;
+}
+
+.form-grupo label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--admin-txt-muted);
+}
+
+.form-control {
+    width: 100%;
+    background-color: var(--admin-bg-input);
+    border: var(--admin-border);
+    padding: 10px 14px;
+    border-radius: var(--admin-radius);
+    color: var(--admin-txt-main);
+    font-size: 0.9rem;
+    transition: var(--admin-transicion);
+}
+
+.form-control:focus {
+    border-color: var(--admin-acento);
+    box-shadow: 0 0 0 2px var(--admin-acento-muted);
+}
+
+select.form-control {
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   9. RESPONSIVIDAD Y MEDIA QUERIES (SISTEMA ADAPTABLE)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .admin-layout {
+        grid-template-columns: 1fr; /* Ocultamiento estructural de sidebar fija */
+    }
+    
+    .admin-sidebar {
+        position: fixed;
+        left: -260px;
+        top: 0;
+        bottom: 0;
+        width: 260px;
+        transition: var(--admin-transicion);
+    }
+    
+    .admin-sidebar.abierto {
+        left: 0;
+    }
+    
+    .dashboard-grid-graficos {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .topbar-acciones {
+        width: 100%;
+    }
+    
+    .topbar-acciones .btn {
+        width: 100%;
+    }
+
+    .tabla-busqueda {
+        width: 100%;
+    }
+    
+    .dashboard-contenedor-modulos {
+        padding: 15px;
+    }
+}

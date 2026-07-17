@@ -1,0 +1,624 @@
+/* ==========================================================================
+   1. VARIABLES DE DISEÑO (SISTEMA DE TOKENS) & RESET GLOBAL
+   ========================================================================== */
+
+   :root {
+    /* Paleta de Colores - Identidad Ciclismo Premium */
+    --color-primario: #1e1e24;       /* Gris Oscuro / Carbono */
+    --color-secundario: #1a365d;   /* Azul Industrial Profundo */
+    --color-acento: #ff5a00;       /* Naranja Neón / Alta Visibilidad */
+    --color-acento-hover: #e04f00;
+    --color-fondo: #f7fafc;        /* Gris Claro Texturizado */
+    --color-superficie: #ffffff;   /* Blanco Puro */
+    --color-texto: #2d3748;        /* Gris Antracita */
+    --color-texto-mutado: #718096;  /* Gris Medio */
+    --color-borde: #e2e8f0;        /* Gris Línea Divisoria */
+    --color-alerta: #e53e3e;       /* Rojo Alerta Quiebre Stock */
+    --color-exito: #38a169;        /* Verde Éxito Operativo */
+
+    /* Sistema de Tipografía y Espaciados */
+    --fuente-principal: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --sombra-suave: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    --sombra-tarjeta: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+    --sombra-sidebar: -5px 0 25px rgba(0, 0, 0, 0.15);
+    --radio-borde: 8px;
+    --transicion-rapida: all 0.2s ease-in-out;
+}
+
+/* Reset Estricto de Maquetación */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--fuente-principal);
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Contenedores Estándar */
+.contenedor {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.seccion-espaciado {
+    padding: 60px 0;
+}
+
+.flex-container {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Enlaces y Botones Base */
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transicion-rapida);
+}
+
+button {
+    font-family: var(--fuente-principal);
+    border: none;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    transition: var(--transicion-rapida);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    border-radius: var(--radio-borde);
+    transition: var(--transicion-rapida);
+    gap: 8px;
+}
+
+.btn-primario {
+    background-color: var(--color-acento);
+    color: var(--color-superficie);
+}
+
+.btn-primario:hover {
+    background-color: var(--color-acento-hover);
+}
+
+.btn-secundario {
+    background-color: var(--color-primario);
+    color: var(--color-superficie);
+}
+
+.btn-secundario:hover {
+    background-color: #0d0d10;
+}
+
+.btn-bloque {
+    width: 100%;
+}
+
+/* ==========================================================================
+   2. NAVBAR & HEADER (TIENDA PÚBLICA)
+   ========================================================================== */
+
+.sitio-header {
+    background-color: var(--color-primario);
+    color: var(--color-superficie);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--sombra-suave);
+    padding: 15px 0;
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-enlace {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.logo-texto-primario {
+    color: var(--color-superficie);
+}
+
+.logo-texto-secundario {
+    color: var(--color-acento);
+}
+
+.nav-lista {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-enlace {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #cbd5e0;
+    padding: 5px 0;
+    position: relative;
+}
+
+.nav-enlace:hover,
+.nav-enlace.activo {
+    color: var(--color-superficie);
+}
+
+.nav-enlace::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-acento);
+    transition: var(--transicion-rapida);
+}
+
+.nav-enlace:hover::after,
+.nav-enlace.activo::after {
+    width: 100%;
+}
+
+.nav-admin-link {
+    color: #90cdf4;
+}
+
+.carrito-toggle {
+    position: relative;
+    color: var(--color-superficie);
+    font-size: 1.3rem;
+    padding: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.carrito-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--color-acento);
+}
+
+.badge-contador {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--color-acento);
+    color: var(--color-superficie);
+    font-size: 0.75rem;
+    font-weight: bold;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    border: 2px solid var(--color-primario);
+}
+
+/* ==========================================================================
+   3. SECCIÓN HÉROE (HERO BANNER)
+   ========================================================================== */
+
+.hero-seccion {
+    background: linear-gradient(rgba(30, 30, 36, 0.85), rgba(26, 54, 93, 0.85)), url('https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+    color: var(--color-superficie);
+    padding: 100px 0;
+    text-align: center;
+}
+
+.hero-contenido {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.hero-titulo {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+}
+
+.hero-subtitulo {
+    font-size: 1.2rem;
+    color: #e2e8f0;
+    margin-bottom: 35px;
+}
+
+/* ==========================================================================
+   4. CATÁLOGO DE PRODUCTOS (GRID & TARJETAS)
+   ========================================================================== */
+
+.seccion-encabezado {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.seccion-titulo {
+    font-size: 2rem;
+    color: var(--color-secundario);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.seccion-descripcion {
+    color: var(--color-texto-mutado);
+    font-size: 1.05rem;
+}
+
+.filtros-contenedor {
+    justify-content: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.btn-filtro {
+    padding: 8px 20px;
+    background-color: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-texto);
+}
+
+.btn-filtro:hover,
+.btn-filtro.activo {
+    background-color: var(--color-acento);
+    border-color: var(--color-acento);
+    color: var(--color-superficie);
+}
+
+/* Grid Responsivo Automatizado */
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+/* Estructura de Tarjetas */
+.producto-card {
+    background-color: var(--color-superficie);
+    border-radius: var(--radio-borde);
+    border: 1px solid var(--color-borde);
+    box-shadow: var(--sombra-suave);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transicion-rapida);
+}
+
+.producto-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-tarjeta);
+}
+
+.producto-imagen-wrapper {
+    width: 100%;
+    height: 200px;
+    background-color: #f7fafc;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Simulación de Imagen o Marcador de Posición */
+.producto-imagen-wrapper::before {
+    content: '\f206';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 4rem;
+    color: #e2e8f0;
+}
+
+.producto-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.producto-categoria {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--color-acento);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.producto-nombre {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-primario);
+    margin-bottom: 10px;
+    line-height: 1.4;
+    height: 44px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.producto-precio {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--color-secundario);
+    margin-top: auto;
+    margin-bottom: 15px;
+}
+
+.btn-comprar {
+    width: 100%;
+}
+
+/* ==========================================================================
+   5. CARRITO DE COMPRAS INTERACTIVO (SIDEBAR)
+   ========================================================================== */
+
+.carrito-sidebar {
+    position: fixed;
+    top: 0;
+    right: -400px; /* Oculto por defecto */
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    background-color: var(--color-superficie);
+    box-shadow: var(--sombra-sidebar);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.carrito-sidebar.abierto {
+    right: 0;
+}
+
+.carrito-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--color-borde);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-primario);
+    color: var(--color-superficie);
+}
+
+.carrito-titulo {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.btn-cerrar-carrito {
+    color: var(--color-superficie);
+    font-size: 1.4rem;
+}
+
+.btn-cerrar-carrito:hover {
+    color: var(--color-acento);
+}
+
+.carrito-contenido-wrapper {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* Estado Vacío */
+.carrito-vacio-mensaje {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--color-texto-mutado);
+}
+
+.carrito-vacio-mensaje i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    display: block;
+    color: var(--color-borde);
+}
+
+/* Items dentro del carrito */
+.carrito-item {
+    display: flex;
+    gap: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--color-borde);
+    align-items: center;
+}
+
+.carrito-item-detalles {
+    flex-grow: 1;
+}
+
+.item-nombre {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-primario);
+    margin-bottom: 4px;
+}
+
+.item-meta {
+    font-size: 0.85rem;
+    color: var(--color-texto-mutado);
+}
+
+.item-precio {
+    font-weight: 700;
+    color: var(--color-secundario);
+}
+
+.btn-eliminar-item {
+    color: var(--color-texto-mutado);
+}
+
+.btn-eliminar-item:hover {
+    color: var(--color-alerta);
+}
+
+/* Footer Fijo del Carrito */
+.carrito-footer {
+    padding: 20px;
+    border-top: 1px solid var(--color-borde);
+    background-color: #f7fafc;
+}
+
+.carrito-total-linea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.total-etiqueta {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-texto);
+}
+
+.total-monto {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-acento);
+}
+
+.carrito-acciones-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Capa Transparente de Fondo */
+.carrito-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+    backdrop-filter: blur(2px);
+}
+
+.carrito-overlay.activo {
+    display: block;
+}
+
+/* ==========================================================================
+   6. PIE DE PÁGINA INSTITUCIONAL (FOOTER)
+   ========================================================================== */
+
+.sitio-footer {
+    background-color: var(--color-primario);
+    color: #cbd5e0;
+    padding: 40px 0 20px 0;
+    margin-top: 60px;
+    border-top: 4px solid var(--color-acento);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.footer-info-marca h3 {
+    color: var(--color-superficie);
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+}
+
+.footer-enlaces-contacto h4 {
+    color: var(--color-superficie);
+    margin-bottom: 15px;
+}
+
+.footer-enlaces-contacto p {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-enlaces-contacto i {
+    color: var(--color-acento);
+}
+
+.footer-derechos {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   7. MEDIA QUERIES (SISTEMA RESPONSIVO)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+
+    .header-flex {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .nav-lista {
+        gap: 15px;
+    }
+
+    .hero-titulo {
+        font-size: 2.2rem;
+    }
+
+    .carrito-sidebar {
+        max-width: 100%;
+        right: -100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-seccion {
+        padding: 60px 0;
+    }
+
+    .hero-titulo {
+        font-size: 1.8rem;
+    }
+
+    .productos-grid {
+        grid-template-columns: 1fr;
+    }
+}
