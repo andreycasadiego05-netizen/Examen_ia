@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-Card Especial BikeStore</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Font Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==========================================
+           CONFIGURACIÓN DE IMPRESIÓN Y TAMAÑO PDF
+           ========================================== */
+        @page {
+            size: letter landscape; /* O puede ser 'A5 landscape' */
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* Contenedor principal de la tarjeta */
+        .ecard-container {
+            width: 279mm;  /* Ancho carta horizontal */
+            height: 216mm; /* Alto carta horizontal */
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            position: relative;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Marco decorativo dorado/naranja */
+        .ecard-border {
+            position: absolute;
+            top: 15mm;
+            left: 15mm;
+            right: 15mm;
+            bottom: 15mm;
+            border: 2px solid transparent;
+            border-image: linear-gradient(135deg, #ff5a00, #f59e0b, #ff5a00) 1;
+            pointer-events: none;
+        }
+
+        /* Adorno de fondo en las esquinas */
+        .ecard-bg-glow {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(255, 90, 0, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            top: -100px;
+            right: -100px;
+            border-radius: 50%;
+        }
+
+        /* Header / Logo */
+        .ecard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+
+        .brand-logo i {
+            color: #ff5a00;
+            font-size: 2.2rem;
+        }
+
+        .badge-vip {
+            background: rgba(255, 90, 0, 0.15);
+            border: 1px solid #ff5a00;
+            color: #ff7b33;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Cuerpo principal */
+        .ecard-body {
+            text-align: center;
+            z-index: 2;
+            padding: 0 2rem;
+        }
+
+        .ecard-subtitle {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .ecard-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .recipient-name {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #ff7b33;
+            margin-bottom: 1.2rem;
+            font-style: italic;
+        }
+
+        .ecard-message {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #94a3b8;
+            max-width: 750px;
+            margin: 0 auto 2rem auto;
+        }
+
+        /* Cupon / Código de regalo */
+        .coupon-box {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(30, 41, 59, 0.8);
+            border: 2px dashed #f59e0b;
+            padding: 12px 35px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        .coupon-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+        }
+
+        .coupon-code {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fbbf24;
+            letter-spacing: 4px;
+            font-family: monospace;
+        }
+
+        /* Footer */
+        .ecard-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            z-index: 2;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1rem;
+        }
+
+        .footer-info {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .footer-info strong {
+            color: #cbd5e1;
+        }
+
+        .footer-web {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ff7b33;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ecard-container">
+        <!-- Elementos decorativos -->
+        <div class="ecard-border"></div>
+        <div class="ecard-bg-glow"></div>
+
+        <!-- Encabezado / Branding -->
+        <header class="ecard-header">
+            <div class="brand-logo">
+                <i class="fa-solid fa-bicycle"></i>
+                <span>BIKESTORE</span>
+            </div>
+            <div class="badge-vip">
+                <i class="fa-solid fa-crown"></i> Cliente Preferencial
+            </div>
+        </header>
+
+        <!-- Contenido Central -->
+        <main class="ecard-body">
+            <p class="ecard-subtitle">Certificado de Agradecimiento</p>
+            <h1 class="ecard-title">¡Gracias por Rodar con Nosotros!</h1>
+            
+            <p class="recipient-name">Para: Juan Pérez</p>
+            
+            <p class="ecard-message">
+                Queremos reconocer tu pasión por el ciclismo y tu lealtad a la familia **BikeStore**. 
+                Como muestra de nuestro agradecimiento, te obsequiamos este cupón exclusivo para tu próximo mantenimiento o compra de accesorios.
+            </p>
+
+            <!-- Sección de Cupón -->
+            <div class="coupon-box">
+                <span class="coupon-label">Tu código de regalo exclusivo:</span>
+                <span class="coupon-code">REGALO2026</span>
+            </div>
+        </main>
+
+        <!-- Pie de página -->
+        <footer class="ecard-footer">
+            <div class="footer-info">
+                <p>Emitido por: <strong>El Equipo de BikeStore</strong></p>
+                <p>Válido hasta el 31 de Diciembre de 2026</p>
+            </div>
+            <a href="https://www.bikestore.com" class="footer-web">www.bikestore.com</a>
+        </footer>
+    </div>
+
+</body>
+</html>
