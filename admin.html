@@ -1,215 +1,215 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BikeStore - Panel de Control Administrativo</title>
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <!-- Iconos Externos para Dashboards Avanzados (FontAwesome) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Librería de Gráficos (Chart.js cargada desde CDN para su inicialización en js/admin.js) -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-    <!-- Hoja de estilos compartida y centralizada del proyecto -->
-    <link rel="stylesheet" href="css/admin.css">
-</head>
-<body>
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BikeStore - Panel de Control Administrativo</title>
+        <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <!-- Iconos Externos para Dashboards Avanzados (FontAwesome) -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <!-- Librería de Gráficos (Chart.js cargada desde CDN para su inicialización en js/admin.js) -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+        <!-- Hoja de estilos compartida y centralizada del proyecto -->
+        <link rel="stylesheet" href="css/admin.css">
+    </head>
+    <body>
 
-    <!-- Contenedor Maestro con Arquitectura Layout de Administrador -->
-    <div class="admin-layout">
+        <!-- Contenedor Maestro con Arquitectura Layout de Administrador -->
+        <div class="admin-layout">
 
-        <!-- Barra Lateral de Navegación del Sistema (Sidebar) -->
-        <aside class="admin-sidebar">
-            <div class="sidebar-header">
-                <div class="logo-contenedor">
-                    <span class="logo-texto-primario">Bike</span><span class="logo-texto-secundario">Admin</span>
+            <!-- Barra Lateral de Navegación del Sistema (Sidebar) -->
+            <aside class="admin-sidebar">
+                <div class="sidebar-header">
+                    <div class="logo-contenedor">
+                        <span class="logo-texto-primario">Bike</span><span class="logo-texto-secundario">Admin</span>
+                    </div>
+                    <p class="sidebar-user-role"><i class="fa-solid fa-user-shield"></i> Operaciones BI</p>
                 </div>
-                <p class="sidebar-user-role"><i class="fa-solid fa-user-shield"></i> Operaciones BI</p>
-            </div>
-            
-            <nav class="sidebar-navegacion" aria-label="Menú de administración">
-                <ul class="sidebar-lista">
-                    <li>
-                        <a href="#seccion-resumen" class="sidebar-link activo" id="link-resumen">
-                            <i class="fa-solid fa-chart-pie"></i> Vista General
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#seccion-ventas" class="sidebar-link" id="link-ventas">
-                            <i class="fa-solid fa-money-bill-trend-up"></i> Historial Ventas
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#seccion-inventario" class="sidebar-link" id="link-inventario">
-                            <i class="fa-solid fa-boxes-stacked"></i> Control Almacén
-                        </a>
-                    </li>
-                    <li class="sidebar-divisor"></li>
-                    <li>
-                        <a href="index.html" class="sidebar-link link-externo">
-                            <i class="fa-solid fa-arrow-left-long"></i> Volver a Tienda
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
+                
+                <nav class="sidebar-navegacion" aria-label="Menú de administración">
+                    <ul class="sidebar-lista">
+                        <li>
+                            <a href="#seccion-resumen" class="sidebar-link activo" id="link-resumen">
+                                <i class="fa-solid fa-chart-pie"></i> Vista General
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#seccion-ventas" class="sidebar-link" id="link-ventas">
+                                <i class="fa-solid fa-money-bill-trend-up"></i> Historial Ventas
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#seccion-inventario" class="sidebar-link" id="link-inventario">
+                                <i class="fa-solid fa-boxes-stacked"></i> Control Almacén
+                            </a>
+                        </li>
+                        <li class="sidebar-divisor"></li>
+                        <li>
+                            <a href="index.html" class="sidebar-link link-externo">
+                                <i class="fa-solid fa-arrow-left-long"></i> Volver a Tienda
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
 
-        <!-- Contenedor Principal de Datos y Módulos -->
-        <main class="admin-main-content">
+            <!-- Contenedor Principal de Datos y Módulos -->
+            <main class="admin-main-content">
 
-            <!-- Encabezado del Panel de Control Superior -->
-            <header class="admin-topbar">
-                <div class="topbar-contexto">
-                    <h1 id="dynamic-section-title">Dashboard Analítico de Negocio</h1>
-                    <p class="topbar-fecha-filtro">Consolidado: <span class="highlight-periodo">Julio 2026</span></p>
-                </div>
-                <div class="topbar-acciones">
-                    <button id="btn-exportar-reporte" class="btn btn-secundario btn-icono">
-                        <i class="fa-solid fa-file-arrow-down"></i> Exportar Datos
-                    </button>
-                </div>
-            </header>
+                <!-- Encabezado del Panel de Control Superior -->
+                <header class="admin-topbar">
+                    <div class="topbar-contexto">
+                        <h1 id="dynamic-section-title">Dashboard Analítico de Negocio</h1>
+                        <p class="topbar-fecha-filtro">Consolidado: <span class="highlight-periodo">Julio 2026</span></p>
+                    </div>
+                    <div class="topbar-acciones">
+                        <button id="btn-exportar-reporte" class="btn btn-secundario btn-icono">
+                            <i class="fa-solid fa-file-arrow-down"></i> Exportar Datos
+                        </button>
+                    </div>
+                </header>
 
-            <!-- Zona de Paneles Interactivos (Secciones del Dashboard) -->
-            <div class="dashboard-contenedor-modulos">
+                <!-- Zona de Paneles Interactivos (Secciones del Dashboard) -->
+                <div class="dashboard-contenedor-modulos">
 
-                <!-- MODULO 1: VISTA GENERAL (RESUMEN DE KPI'S PRINCIPALES) -->
-                <section id="seccion-resumen" class="modulo-dashboard activo">
-                    
-                    <!-- Cuadrícula Fluida de Indicadores Financieros y Operativos -->
-                    <div class="dashboard-grid-kpis">
+                    <!-- MODULO 1: VISTA GENERAL (RESUMEN DE KPI'S PRINCIPALES) -->
+                    <section id="seccion-resumen" class="modulo-dashboard activo">
                         
-                        <!-- Tarjeta KPI: Ventas Totales -->
-                        <article class="card-kpi kpi-financiero">
-                            <div class="kpi-cuerpo">
-                                <span class="kpi-etiqueta">Facturación Bruta (Julio)</span>
-                                <h2 id="kpi-ventas-totales" class="kpi-valor">$0.00</h2>
-                                <p class="kpi-metas"><i class="fa-solid fa-arrow-up-long"></i> Meta mensual alcanzada</p>
-                            </div>
-                            <div class="kpi-icono">
-                                <i class="fa-solid fa-cash-register"></i>
-                            </div>
-                        </article>
+                        <!-- Cuadrícula Fluida de Indicadores Financieros y Operativos -->
+                        <div class="dashboard-grid-kpis">
+                            
+                            <!-- Tarjeta KPI: Ventas Totales -->
+                            <article class="card-kpi kpi-financiero">
+                                <div class="kpi-cuerpo">
+                                    <span class="kpi-etiqueta">Facturación Bruta (Julio)</span>
+                                    <h2 id="kpi-ventas-totales" class="kpi-valor">$0.00</h2>
+                                    <p class="kpi-metas"><i class="fa-solid fa-arrow-up-long"></i> Meta mensual alcanzada</p>
+                                </div>
+                                <div class="kpi-icono">
+                                    <i class="fa-solid fa-cash-register"></i>
+                                </div>
+                            </article>
 
-                        <!-- Tarjeta KPI: Unidades Vendidas -->
-                        <article class="card-kpi kpi-volumen">
-                            <div class="kpi-cuerpo">
-                                <span class="kpi-etiqueta">Unidades Totales Despachadas</span>
-                                <h2 id="kpi-unidades" class="kpi-valor">0</h2>
-                                <p class="kpi-metas"><i class="fa-solid fa-bicycle"></i> Volumen total en piso</p>
-                            </div>
-                            <div class="kpi-icono">
-                                <i class="fa-solid fa-box"></i>
-                            </div>
-                        </article>
+                            <!-- Tarjeta KPI: Unidades Vendidas -->
+                            <article class="card-kpi kpi-volumen">
+                                <div class="kpi-cuerpo">
+                                    <span class="kpi-etiqueta">Unidades Totales Despachadas</span>
+                                    <h2 id="kpi-unidades" class="kpi-valor">0</h2>
+                                    <p class="kpi-metas"><i class="fa-solid fa-bicycle"></i> Volumen total en piso</p>
+                                </div>
+                                <div class="kpi-icono">
+                                    <i class="fa-solid fa-box"></i>
+                                </div>
+                            </article>
 
-                        <!-- Tarjeta KPI: Producto Más Rentable -->
-                        <article class="card-kpi kpi-rentabilidad">
-                            <div class="kpi-cuerpo">
-                                <span class="kpi-etiqueta">Líder de Rentabilidad (Margen × Vol)</span>
-                                <h2 id="kpi-rentable" class="kpi-valor-texto">Cargando...</h2>
-                                <p id="kpi-rentable-monto" class="kpi-subvalor">$0.00 Generados</p>
-                            </div>
-                            <div class="kpi-icono">
-                                <i class="fa-solid fa-scale-balanced"></i>
-                            </div>
-                        </article>
+                            <!-- Tarjeta KPI: Producto Más Rentable -->
+                            <article class="card-kpi kpi-rentabilidad">
+                                <div class="kpi-cuerpo">
+                                    <span class="kpi-etiqueta">Líder de Rentabilidad (Margen × Vol)</span>
+                                    <h2 id="kpi-rentable" class="kpi-valor-texto">Cargando...</h2>
+                                    <p id="kpi-rentable-monto" class="kpi-subvalor">$0.00 Generados</p>
+                                </div>
+                                <div class="kpi-icono">
+                                    <i class="fa-solid fa-scale-balanced"></i>
+                                </div>
+                            </article>
 
-                    </div>
+                        </div>
 
-                    <!-- Sub-sección Destinada a la Renderización de Gráficos de Reporte -->
-                    <div id="reportes-graficos" class="dashboard-grid-graficos">
+                        <!-- Sub-sección Destinada a la Renderización de Gráficos de Reporte -->
+                        <div id="reportes-graficos" class="dashboard-grid-graficos">
+                            
+                            <!-- Contenedor del Gráfico Top 5 Productos -->
+                            <div class="grafico-card-wrapper">
+                                <div class="grafico-card-header">
+                                    <h3>Top 5 Productos Más Vendidos (Volumen)</h3>
+                                </div>
+                                <div class="grafico-canvas-container">
+                                    <canvas id="chart-top-productos"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Contenedor del Gráfico Proyección Estacional / Demanda -->
+                            <div class="grafico-card-wrapper">
+                                <div class="grafico-card-header">
+                                    <h3>Estacionalidad y Tráfico Semanal de Ventas</h3>
+                                </div>
+                                <div class="grafico-canvas-container">
+                                    <canvas id="chart-proyeccion-demanda"></canvas>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+
+                    <!-- MODULO 2: HISTORIAL DE TRANSACCIONES (VENTAS REALIZADAS) -->
+                    <section id="seccion-ventas" class="modulo-dashboard">
+                        <div class="tabla-card-wrapper">
+                            <div class="tabla-card-header flex-container">
+                                <h3>Registro General de Transacciones de Venta</h3>
+                                <div class="tabla-busqueda">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="text" id="input-buscar-venta" placeholder="Buscar por producto o ID...">
+                                </div>
+                            </div>
+                            <div class="tabla-responsive-container">
+                                <table id="tabla-ventas-admin" class="tabla-admin-custom">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>ID Producto</th>
+                                            <th>Producto</th>
+                                            <th>Cantidad</th>
+                                            <th>Valor Unitario</th>
+                                            <th>Total Transacción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ventas-rows">
+                                        <!-- Datos inyectados de forma exhaustiva mediante js/admin.js -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <!-- MODULO 3: CONTROL DE ALMACÉN (INVENTARIO Y RENTABILIDAD) -->
+                    <section id="seccion-inventario" class="modulo-dashboard">
                         
-                        <!-- Contenedor del Gráfico Top 5 Productos -->
-                        <div class="grafico-card-wrapper">
-                            <div class="grafico-card-header">
-                                <h3>Top 5 Productos Más Vendidos (Volumen)</h3>
+                        <!-- Tarjeta de Contención para Listado General e Indicadores de Quiebre de Stock -->
+                        <div class="tabla-card-wrapper">
+                            <div class="tabla-card-header flex-container">
+                                <h3>Estado Consolidado del Inventario y Cobertura</h3>
+                                <span id="contador-alertas-criticas" class="status-badge badge-alerta-general">0 Alertas Críticas</span>
                             </div>
-                            <div class="grafico-canvas-container">
-                                <canvas id="chart-top-productos"></canvas>
-                            </div>
-                        </div>
-
-                        <!-- Contenedor del Gráfico Proyección Estacional / Demanda -->
-                        <div class="grafico-card-wrapper">
-                            <div class="grafico-card-header">
-                                <h3>Estacionalidad y Tráfico Semanal de Ventas</h3>
-                            </div>
-                            <div class="grafico-canvas-container">
-                                <canvas id="chart-proyeccion-demanda"></canvas>
-                            </div>
-                        </div>
-
-                    </div>
-                </section>
-
-
-                <!-- MODULO 2: HISTORIAL DE TRANSACCIONES (VENTAS REALIZADAS) -->
-                <section id="seccion-ventas" class="modulo-dashboard">
-                    <div class="tabla-card-wrapper">
-                        <div class="tabla-card-header flex-container">
-                            <h3>Registro General de Transacciones de Venta</h3>
-                            <div class="tabla-busqueda">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <input type="text" id="input-buscar-venta" placeholder="Buscar por producto o ID...">
+                            <div class="tabla-responsive-container">
+                                <table id="tabla-inventario-admin" class="tabla-admin-custom">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Producto</th>
+                                            <th>Producto</th>
+                                            <th>Stock Existente</th>
+                                            <th>Proveedor Corporativo</th>
+                                            <th>Costo Compra</th>
+                                            <th>Precio Venta</th>
+                                            <th>Estatus Cobertura</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="inventario-rows">
+                                        <!-- Filas y etiquetas dinámicas (.status-badge) inyectadas por js/admin.js -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <div class="tabla-responsive-container">
-                            <table id="tabla-ventas-admin" class="tabla-admin-custom">
-                                <thead>
-                                    <tr>
-                                        <th>Fecha</th>
-                                        <th>ID Producto</th>
-                                        <th>Producto</th>
-                                        <th>Cantidad</th>
-                                        <th>Valor Unitario</th>
-                                        <th>Total Transacción</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="ventas-rows">
-                                    <!-- Datos inyectados de forma exhaustiva mediante js/admin.js -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
+                    </section>
 
+                </div>
+            </main>
+        </div>
 
-                <!-- MODULO 3: CONTROL DE ALMACÉN (INVENTARIO Y RENTABILIDAD) -->
-                <section id="seccion-inventario" class="modulo-dashboard">
-                    
-                    <!-- Tarjeta de Contención para Listado General e Indicadores de Quiebre de Stock -->
-                    <div class="tabla-card-wrapper">
-                        <div class="tabla-card-header flex-container">
-                            <h3>Estado Consolidado del Inventario y Cobertura</h3>
-                            <span id="contador-alertas-criticas" class="status-badge badge-alerta-general">0 Alertas Críticas</span>
-                        </div>
-                        <div class="tabla-responsive-container">
-                            <table id="tabla-inventario-admin" class="tabla-admin-custom">
-                                <thead>
-                                    <tr>
-                                        <th>ID Producto</th>
-                                        <th>Producto</th>
-                                        <th>Stock Existente</th>
-                                        <th>Proveedor Corporativo</th>
-                                        <th>Costo Compra</th>
-                                        <th>Precio Venta</th>
-                                        <th>Estatus Cobertura</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="inventario-rows">
-                                    <!-- Filas y etiquetas dinámicas (.status-badge) inyectadas por js/admin.js -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-        </main>
-    </div>
-
-    <!-- Script de Control de Lógica Operativa, Métricas y Renderizado de Gráficos -->
-    <script src="js/admin.js" defer></script>
-</body>
-</html>
+        <!-- Script de Control de Lógica Operativa, Métricas y Renderizado de Gráficos -->
+        <script src="js/admin.js" defer></script>
+    </body>
+    </html>

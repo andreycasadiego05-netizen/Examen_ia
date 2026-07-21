@@ -622,3 +622,148 @@ button {
         grid-template-columns: 1fr;
     }
 }
+
+/* ==========================================================================
+   ESTILOS PARA EL MODAL DE AUTENTICACIÓN ADMIN
+   ========================================================================== */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.6s ease-in-out;
+    padding: 20px;
+}
+
+.modal-overlay.activo {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-card {
+    background-color: var(--color-primario);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radio-borde);
+    width: 100%;
+    max-width: 420px;
+    padding: 35px 30px;
+    position: relative;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transform: translateY(-20px);
+    transition: transform 0.3s ease-in-out;
+    color: var(--color-superficie);
+}
+
+.modal-overlay.activo .modal-card {
+    transform: translateY(0);
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: var(--color-texto-mutado);
+    font-size: 1.3rem;
+}
+
+.modal-close-btn:hover {
+    color: var(--color-acento);
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.modal-icon {
+    font-size: 2.5rem;
+    color: var(--color-acento);
+    margin-bottom: 10px;
+}
+
+.modal-header h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.modal-header p {
+    font-size: 0.85rem;
+    color: var(--color-texto-mutado);
+}
+
+/* Formulario e Inputs */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #cbd5e0;
+}
+
+.form-group input {
+    background-color: #121214;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radio-borde);
+    padding: 10px 14px;
+    color: var(--color-superficie);
+    font-family: var(--fuente-principal);
+    font-size: 0.95rem;
+    outline: none;
+    transition: var(--transicion-rapida);
+}
+
+.form-group input:focus {
+    border-color: var(--color-acento);
+    box-shadow: 0 0 0 2px rgba(255, 90, 0, 0.2);
+}
+
+/* Validación y Estados de Error */
+.form-group input.input-error {
+    border-color: var(--color-alerta) !important;
+    background-color: rgba(229, 62, 62, 0.05);
+}
+
+.form-status {
+    min-height: 24px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.mensaje-error {
+    color: var(--color-alerta);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.mensaje-exito {
+    color: var(--color-exito);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Animación Shake para error */
+@keyframes modalShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
+}
+
+.modal-card.shake {
+    animation: modalShake 1s ease-in-out;
+}
