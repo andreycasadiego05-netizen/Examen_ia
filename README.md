@@ -48,3 +48,82 @@ bikestore/
 │   └── admin.js           # Navegación del panel, gráficos Chart.js, filtros y exportación CSV
 │
 └── README.md              # Documentación del proyecto
+```
+
+# 🔑 Credenciales de Prueba
+
+Para acceder al panel administrativo utiliza las siguientes credenciales:
+
+| Campo | Valor |
+|-------|-------|
+| Correo Electrónico | `admin@mail.com` |
+| Contraseña | `123456` |
+
+---
+
+# 🚀 Instalación y Ejecución
+
+Este proyecto está desarrollado completamente del lado del cliente (**Client-Side**) utilizando HTML, CSS y JavaScript. No requiere servidor ni base de datos.
+
+## 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/tu-usuario/bikestore.git
+```
+
+## 2. Acceder al proyecto
+
+```bash
+cd bikestore
+```
+
+## 3. Ejecutar
+
+Puedes abrir directamente:
+
+```text
+index.html
+```
+
+o utilizar **Live Server** desde Visual Studio Code.
+
+---
+
+# 🛠️ Tecnologías Utilizadas
+
+| Tecnología | Uso |
+|------------|-----|
+| HTML5 | Estructura semántica |
+| CSS3 | Diseño responsivo, Flexbox, Grid y animaciones |
+| JavaScript ES6+ | Manipulación del DOM, Eventos, LocalStorage y Blob API |
+| Chart.js | Visualización de gráficos |
+| Font Awesome | Iconografía |
+
+---
+
+# 📊 Funcionalidades del Dashboard
+
+- Dashboard con indicadores KPI.
+- Gráficos dinámicos mediante Chart.js.
+- Historial de ventas.
+- Búsqueda en tiempo real.
+- Gestión de inventario.
+- Estados de stock.
+- Reportes mensuales.
+- Exportación a CSV.
+- Login administrativo.
+- Modal interactivo.
+- Animaciones CSS.
+- Diseño responsivo.
+
+---
+
+# 📄 Licencia
+
+Este proyecto se distribuye bajo la **Licencia MIT**.
+
+Consulta el archivo **LICENSE** para obtener más información.
+
+
+
+
